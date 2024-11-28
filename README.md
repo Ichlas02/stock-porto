@@ -1,7 +1,7 @@
 # Stock Portfolio Project
 
 ## First Visualization Prototype by Ichlas
-![image](https://github.com/user-attachments/assets/e68d1de2-a2de-4ae3-a298-88a8e5e9e842)
+![image](https://github.com/user-attachments/assets/cf7b18f9-cb04-45d3-bc78-1987fc0b312d)
 
 Utilized calculated fields and parameters feature in Tableau to create:
 1. Time period filters & custom parameters [1W, 1M, 3M, 6M, YTD (Year to Date), 1Y, 3Y, 5Y]
@@ -16,4 +16,3 @@ Made the dashboard using 5 sheets:
 3. Gain/Loss Persentage
 4. Top Gainer
 5. Top Loser
-
