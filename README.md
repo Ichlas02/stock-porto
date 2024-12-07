@@ -9,7 +9,7 @@ We used the IHSG stock data from https://www.kaggle.com/datasets/muamkh/ihsgstoc
 3. Added the LQ45 index as the actual data for overall LQ45 stock movement.
 
 ### Data Source Preparation in Tableau:
-Make data relations between the LQ45 index data and the stock data, with the 45 stock data from LQ45 as the main pivot.
+Make data relations by joining the LQ45 index data and the stock data, with the 45 stock data from LQ45 as the main pivot.
 
 ![image](https://github.com/user-attachments/assets/7584358d-8ac9-4985-adcc-e4e176320dc3)
 
@@ -28,6 +28,7 @@ Make data relations between the LQ45 index data and the stock data, with the 45 
    - Time Period Parameter:
 
       ![image](https://github.com/user-attachments/assets/c62b0604-8f9f-4ed9-920e-a0ce92b1fdd3)
+     
    - Time Period Filter:
       ```
       CASE [Time Period]
@@ -59,6 +60,7 @@ Make data relations between the LQ45 index data and the stock data, with the 45 
       THEN [Close] END)
       ```
 4. Gain/Loss (%):
+   > Made the IF ELSE statement because the stock data does not start from the same dates
    ```
    IF NOT ISNULL([First Close Price]) THEN
     (([Last Close Price] - [First Close Price]) / [First Close Price] * 100)
@@ -66,12 +68,13 @@ Make data relations between the LQ45 index data and the stock data, with the 45 
        0
    END
    ```
-   * Made the IF ELSE statement because the stock data does not start from the same dates
-5. Gain/Loss ranking to determine top gainer/loser:
+6. Gain/Loss ranking to determine top gainer/loser:
    ```
    RANK([Gain/Loss (%)], 'desc')
    ```
-6. Stock Filter based on the selected Sector
+7. Stock Filter based on the selected Sector
+   > By simply dragging the sector field into the filter tab and show the filter into a single value (list)
+
    ![image](https://github.com/user-attachments/assets/8d62aa22-a4ab-49ee-b623-e0d39087c3cd)
 
 ## Second Visualization Prototype by Ichlas
@@ -108,7 +111,31 @@ Make data relations between the LQ45 index data and the stock data, with the 45 
    END
    ```
 2. Made an extra sheet for Sector Stock Heatmap
+   
    ![image](https://github.com/user-attachments/assets/05933d68-0c82-45cf-8dac-9c50c352cb82)
+   
    - Edited extra tooltips information when hovered to the heatmap
+     
+     Here was the initial tooltip:
+     ```
+     Code (AALI.csv+): <Code (AALI.csv+)>
+     Gain/Loss (%):	<AGG(Gain/Loss (%))>
+     ```
+     Drag the First Close Price, Last Close Price, and the Price Diff calculcated field into the tooltip tab. And then insert the newly added parameters into the prompt:
+     ```
+     Code (AALI.csv+): <Code (AALI.csv+)>
+     Gain/Loss (%):	<AGG(Gain/Loss (%))>%
+     Close Price <Parameters.Time Period> Ago: <AGG(First Close Price)>
+     Current Close Price: <AGG(Last Close Price)>
+     Price Difference: <AGG(Price Diff)>
+     ```
+     Show the tooltips and set it to responsive. It should show these information after hovering to it:
+     
      ![image](https://github.com/user-attachments/assets/eaf815ae-c229-4222-b03e-781a86b670eb)
 
+     
+   - Applied the same filter as the Sector sheet by right clicking the filter and apply it to the selected worksheets (in this case, the Sector sheet and the Sector Stock Heatmap)
+     
+     ![image](https://github.com/user-attachments/assets/a9700766-bb3b-44cf-83f8-ef8e806f2f89)
+
+3. Minor changes in the dashboard such as title formats, table allignments, sheet sizes, and graph informations
